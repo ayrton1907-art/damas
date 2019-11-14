@@ -24,8 +24,16 @@ public class grafo() implements interfaceGrafo {
     List<Nodo()> auxGraf = new ArrayList<Nodo()>();
     auxGraf.add(aux);
     graf.add(auxGraf);
-    
   }
+  public void insListaNodos(lista<Nodo> lis){
+    int i=0;
+    while (i<list.size()) {
+      if (graf.get(i)==list.get(i)){
+        graf.get(i).add(list)
+      }//nico en la busqueda del ady tambien ponele en la lista el elemnto raiz por asi decirle... o sea el padre de todos..
+    }
+  }
+
 
 
 }

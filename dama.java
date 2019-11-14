@@ -24,4 +24,7 @@ private List<Nodo()> neg;
       }
     }
  }
+  public  lista<Nodos> adyaNodo (Grafo graf){
+    lista<Nodo> list= new lista<Nodo>
+    list.insListaNodos();
 }
