@@ -26,5 +26,13 @@ private List<Nodo()> neg;
  }
   public  lista<Nodos> adyaNodo (Grafo graf){
     lista<Nodo> list= new lista<Nodo>
+    .
+    .busco
+    .el ady|
+    .de cada
+    .nod y lo sumo a
+    .la lista jusnto
+    .con el padre.
+    .
     list.insListaNodos();
 }
