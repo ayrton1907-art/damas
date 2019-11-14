@@ -24,11 +24,4 @@ private List<Nodo()> negras;
       }
     }
  }
-
- public buscarPos ()
-
-
- public grafo ins()
-
-
 }
