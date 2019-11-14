@@ -1,6 +1,6 @@
 interface interfaceGrafo {
 
-  public void insFicha(ficha fich);
+  public void insFicha(Pair pos);
   public void buscarFicha();
 
 

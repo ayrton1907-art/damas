@@ -1,25 +1,20 @@
 public class ficha extends nodo implements Interficha {
 
   private  Int color;//0->B; 1->N;
-  private  Int posX;-
-  private  Int posY;
+  private  Pair pos;
 
-  public ficha (Int col,Int possX,Int possY){
+  public ficha (Int col,Pair poss){
     color=col;
-    posX=possX;
-    posY=possY;
+    pos=poss;
   }
+  public void  setPos( Pair poss){
+    pos=poss;
+  }
+
   public Int  getColor(){
     return color;
   }
-  public int getPosX (){
-    return posX;
-  }
-  public int getPosY (){
-    return posY;
-  }
-  public void  setPosX( Int auxX,Int auxY){
-    posX= auxX;
-    posY= auxY;
+  public Piair getPos (){
+    return pos;
   }
 }
