@@ -5,5 +5,4 @@ interface interfaceGrafo {
   public void insListaNodos(lista<Nodo> lis);
   public void buscarFicha();
 
-
 }
