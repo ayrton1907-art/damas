@@ -1,14 +1,14 @@
-public class Nodo{
+public class GrafNodo implements interfaceGrafoNodo{
 
       private boolean bol=false;
-      private  Pair  pos;
+      private  Tuplas  pos;
       private  int color;
 
-      public Nodo (Pair poss){ //ingresa la pos de cada nodo en el tablero.
+      public GrafNodo (Tuplas poss){ //ingresa la pos de cada nodo en el tablero.
        pos=poss;
        color=null;
       }
-      public void  setColor ( Int color){//Blanco->0 Negro->1
+      public void  setColor (int color){//Blanco->0 Negro->1
         color=color;
       }
       public void setBool (boolean bool){ //prendido->true apagado->false (contiene o no ficha en esa pos)

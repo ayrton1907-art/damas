@@ -1,22 +1,31 @@
 import java.util.ArrayList;
-public class dama {
+public class Dama implements interfaceDamas{
 
 private Grafo() dam;
 private List<Tuplas()> blan;
 private List<Tuplas()> neg;
 
- public  damas (){
+ public  Dama (){
    Grafo dam =new Grafo();
    List<Tuplas()> blan = new   List<Tuplas()>;
    List<Tuplas()> neg = new   List<Tuplas()>;
  }
+
+
+
+
+
+
+
+
+
 
  public  void insTablero (int tamaño, List<Tuplas> blan, List<Tuplas> neg){
    int inBlancas = 0;
    int inNegras = 0;
    for (int i=0, i<tamaño, i++ ) {
       for (int j=0, j<tamaño, j++ ){
-        Nodo() aux= new Nodo(Tuplas());
+        GrafNodo() aux= new GrafNodo(Tuplas());
         if (blan.get(inBlancas)==<i,j> && inBlancas<blan.size()){
             aux.setBool(true);
             aux.setColor(0);//cero->blancas
@@ -32,14 +41,11 @@ private List<Tuplas()> neg;
  }
 
   public  lista<Nodos> adyaNodo (Grafo graf){
-    lista<Nodo> list= new lista<Nodo>
-    .
-    .busco
-    .el ady|
-    .de cada
-    .nod y lo sumo a
-    .la lista jusnto
-    .con el padre.
-    .
+    list<GrafNodo()> list= new lista<GrafNodo()>;
+
+
+
     list.insListaNodos();
+  }
+
 }

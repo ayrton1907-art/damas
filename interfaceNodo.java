@@ -1,4 +1,4 @@
-interface interfaceNodo{
+interface interfaceGrafNodo{
 
   public void  setColor (int color);
   public void setBool(boolean bool);
