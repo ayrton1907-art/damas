@@ -7,7 +7,7 @@ public class Tuple {
     this.x = a;
     this.y = b;
   }
-  public int getPosx(){
+  public int getPosX(){
     return x;
   }
   public int getPosY(){
@@ -17,15 +17,14 @@ public class Tuple {
     x=a;
     y=b;
   }
-  public void comparToX(Tuple pos){
-    return (x-pos.getPosX());
+  public int comparToX(Tuple pos){
+    return x-pos.getPosX();
   }
-  public void comparToY(Tuple pos){
-    return (y-pos.getPosy());
+  public int comparToY(Tuple pos){
+    return y-pos.getPosY();
   }
-
   public String mosTuple(){
-    return ("( " + x + ", " + y ")");
+    return ('(' + String.valueOf(x) + ',' + String.valueOf(y) + ')');
   }
 
 }

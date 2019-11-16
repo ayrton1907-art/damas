@@ -1,5 +1,5 @@
 package Damas;
-public class GrafNodo implements interfaceGrafoNodo{
+public class GrafNodo {
 
       private boolean bol=false;
       private  Tuple  pos;
@@ -7,7 +7,6 @@ public class GrafNodo implements interfaceGrafoNodo{
 
       public GrafNodo (Tuple poss){ //ingresa la pos de cada nodo en el tablero.
        pos=poss;
-       color=null;
       }
       public void  setColor (int color){//Blanco->0 Negro->1
         color=color;
@@ -18,7 +17,7 @@ public class GrafNodo implements interfaceGrafoNodo{
       public int getColor(){//Blanco->0 Negro->1
         return color;
       }
-      public int getPos (){//ingresa la pos de cada nodo en el tablero.
+      public Tuple getPos (){//ingresa la pos de cada nodo en el tablero.
         return pos;
       }
       public boolean getBool(){//prendido->true apagado->false (contiene o no ficha en esa pos)

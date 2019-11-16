@@ -3,8 +3,8 @@ interface interfaceGrafNodo{
 
   public void  setColor (int color);
   public void setBool(boolean bool);
-  public Pair getPos ();
-  public Int  getColor ();
+  public Tuple getPos ();
+  public int  getColor ();
   public boolean getBool();
 
 }
