@@ -1,11 +1,11 @@
 package Damas;
-import java.util.List
+import java.util.List;
 import java.util.ArrayList;
 public class Grafo implements interfaceGrafo {
 
   private List<List<GrafNodo>> graf;
 
-  public grafo (){
+  public Grafo (){
     List<List<GrafNodo>> graf = new ArrayList<List<GrafNodo>>();
   }
   public void insFicha(GrafNodo aux){
@@ -15,7 +15,7 @@ public class Grafo implements interfaceGrafo {
   }
 
   public void hacerAdy (int tamaño){
-    for (int i=0, i<graf.size(), i++){
+    for (int i=0; i<graf.size(); i++){
       int x = graf.get(i).get(0).getX();
       int y = graf.get(i).get(0).getY();
       int pos;
