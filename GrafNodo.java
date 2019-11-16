@@ -1,10 +1,11 @@
+package Damas;
 public class GrafNodo implements interfaceGrafoNodo{
 
       private boolean bol=false;
-      private  Tuplas  pos;
+      private  Tuple  pos;
       private  int color;
 
-      public GrafNodo (Tuplas poss){ //ingresa la pos de cada nodo en el tablero.
+      public GrafNodo (Tuple poss){ //ingresa la pos de cada nodo en el tablero.
        pos=poss;
        color=null;
       }

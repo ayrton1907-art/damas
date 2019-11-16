@@ -1,17 +1,18 @@
 import java.util.ArrayList;
+import java.util.List;
 public class Dama implements interfaceDamas{
 
-  private Grafo() dam;
-  private List<Tuplas()> blan;
-  private List<Tuplas()> neg;
-  private List<Tuplas()> camino;
+  private Grafo dam;
+  private List<Tuple>  blan;
+  private List<Tuple>  neg;
+  private LList<Tuple>  camino;
   private int tamaño;
 
  public  Dama (){
    Grafo dam =new Grafo();
-   List<Tuplas()> blan = new List<Tuplas()>;
-   List<Tuplas()> neg = new List<Tuplas()>;
-   List<Tuplas()> camino = new List<Tuplas()>;
+   List<Tuple> blan = new List<Tuple> ;
+   List<Tuple>  neg = new List<Tuple> ;
+   List<Tuple>  camino = new List<Tuple> ;
    int tamaño = 0;
  }
  public radixSort(list<Tuplae> listFich){
@@ -20,10 +21,10 @@ public class Dama implements interfaceDamas{
 
  }
 
- public boolean camino (tuple() inicio){
-   tuple() ady = adyNegro(inicio);
+ public boolean camino (Tuple inicio){
+   Tuple ady = adyNegro(inicio);
    if (posibleSalto(inicio, ady)){
-     tuple() aux = new tuple();
+     Tuple aux = new Tuple();
      aux = inicio;
      int pos = (inicio.getX()*tamaño + inicio.getY());
      dam.get(pos).get(0).setBool(false);
@@ -59,7 +60,7 @@ public class Dama implements interfaceDamas{
 
  }
 
- private tuple() adyNegro(tuple() b){
+ private Tuple adyNegro(Tuple b){
    int pos = (b.getX()*tamaño +b.getY());
    for (int i=1, i<graf.get(pos).size(), i++){
      if (dam.get(pos).get(i).getColor() == 1){
@@ -68,11 +69,11 @@ public class Dama implements interfaceDamas{
        }
      }
    }
-   return nil;
+   return null;
  }
 
- private boolean posibleSalto(tuple() b, tuple() n){
-   if (n == nil){
+ private boolean posibleSalto(Tuple b,Tuple n){
+   if (n == null){
      return false;
    }
    if ((b.getX()-n.getX() == 1) && (b.getY() - n.getY() == 1)){
@@ -107,7 +108,7 @@ public class Dama implements interfaceDamas{
 
  public void mostrar(){
    if(!camino.isEmpy()){
-     tuple aux = camino.top();
+     Tuple aux = camino.top();
      camino.pop();
      mostrar();
      System.out.println(aux.mosTuple());

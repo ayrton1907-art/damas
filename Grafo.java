@@ -1,13 +1,15 @@
+package Damas;
+import java.util.List
 import java.util.ArrayList;
-public class Grafo() implements interfaceGrafo {
+public class Grafo implements interfaceGrafo {
 
-  private List<List<GrafNodo()>> graf;
+  private List<List<GrafNodo>> graf;
 
   public grafo (){
-    List<List<GrafNodo()>> graf = new ArrayList<List<GrafNodo()>>();
+    List<List<GrafNodo>> graf = new ArrayList<List<GrafNodo>>();
   }
   public void insFicha(GrafNodo aux){
-    List<GrafNodo()> auxlist = new ArrayList<GrafNodo()>();
+    List<GrafNodo> auxlist = new ArrayList<GrafNodo>();
     auxlist.add(aux);
     graf.add(auxlist);
   }
@@ -35,4 +37,5 @@ public class Grafo() implements interfaceGrafo {
       }
     }
   }
+
 }

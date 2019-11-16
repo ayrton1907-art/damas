@@ -1,3 +1,4 @@
+package Damas;
 interface interfaceGrafo {
 
   //public void insFicha(Pair pos);

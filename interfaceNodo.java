@@ -1,3 +1,4 @@
+package Damas;
 interface interfaceGrafNodo{
 
   public void  setColor (int color);
