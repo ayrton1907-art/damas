@@ -11,13 +11,28 @@ public class Grafo() implements interfaceGrafo {
     auxlist.add(aux);
     graf.add(auxlist);
   }
-  /*public void insListaNodos(lista<Nodo> lis){
-    int i=0;
-    while (i<list.size()) {
-      if (graf.get(i)==list.get(i)){
-        graf.get(i).add(list)
+
+  public void hacerAdy (int tamaño){
+    for (int i=0, i<graf.size(), i++){
+      int x = graf.get(i).get(0).getX();
+      int y = graf.get(i).get(0).getY();
+      int pos;
+      if (x-1>=0 && y-1>=0){
+        pos=(((x-1)*tamaño)+y-1);
+        graf.get(i).add(graf.get(pos).get(0));
+      }
+      if (x-1>=0 && y+1<tamaño){
+        pos=(((x-1)*tamaño)+y+1);
+        graf.get(i).add(graf.get(pos).get(0));
+      }
+      if (x+1<tamaño && y-1>=0){
+        pos=(((x+1)*tamaño)+y-1);
+        graf.get(i).add(graf.get(pos).get(0));
+      }
+      if (x+1<tamaño && y+1<tamaño){
+        pos=(((x+1)*tamaño)+y+1);
+        graf.get(i).add(graf.get(pos).get(0));
       }
     }
-  }*/
-
+  }
 }

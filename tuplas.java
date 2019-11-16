@@ -16,11 +16,15 @@ public class Tuple {
     x=a;
     y=b;
   }
-  public void comparTo(Tuple() pos){
-    if (pos.getPosX()==x && pos.getPosY()==y){
-      return true;
-    }
-    return false;
+  public void comparToX(Tuple pos){
+    return (x-pos.getPosX());
+  }
+  public void comparToY(Tuple pos){
+    return (y-pos.getPosy());
+  }
+
+  public String mosTuple(){
+    return ("( " + x + ", " + y ")");
   }
 
 }

@@ -23,5 +23,4 @@ public class GrafNodo implements interfaceGrafoNodo{
       public boolean getBool(){//prendido->true apagado->false (contiene o no ficha en esa pos)
         return bol;
       }
-
 }
