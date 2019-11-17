@@ -1,4 +1,4 @@
-package Damas;
+package jDamas;
 public class GrafNodo {
 
       private boolean bol=false;

@@ -1,8 +1,7 @@
-package Damas;
+package jDamas;
 interface interfaceGrafo {
- 
-  public void insFicha(Nodo aux);
-  public void insListaNodos(lista<Nodo> lis);
-  public void buscarFicha();
+
+  public void insFicha(GrafNodo aux);
+  public void hacerAdy (int tamaño);
 
 }

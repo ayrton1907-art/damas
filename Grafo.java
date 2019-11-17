@@ -1,4 +1,4 @@
-package Damas;
+package jDamas;
 import java.util.List;
 import java.util.ArrayList;
 public class Grafo implements interfaceGrafo {
@@ -16,8 +16,8 @@ public class Grafo implements interfaceGrafo {
 
   public void hacerAdy (int tamaño){
     for (int i=0; i<graf.size(); i++){
-      int x = graf.get(i).get(0).getX();
-      int y = graf.get(i).get(0).getY();
+      int x = graf.get(i).get(0).getPos().getPosX();
+      int y = graf.get(i).get(0).getPos().getPosY();
       int pos;
       if (x-1>=0 && y-1>=0){
         pos=(((x-1)*tamaño)+y-1);
