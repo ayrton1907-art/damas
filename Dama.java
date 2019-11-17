@@ -1,50 +1,54 @@
 package jDamas;
+import java.util.Stack;
 import java.util.ArrayList;
 import java.util.List;
-public class Dama implements interfaceDamas{
+public class Dama{
 
   private Grafo dam;
   private List<Tuple>  blan;
   private List<Tuple>  neg;
-  private List<Tuple>  camino;
+  private Stack<Tuple>  cam;
   private int tamaño;
 
  public  Dama (){
    Grafo dam =new Grafo();
-   List<Tuple> blan = new ArrayList<Tuple>() ;
+   List<Tuple> blan = new ArrayList<Tuple>() ;    //agregar que inserte los blancos y los negros y el tamaño
    List<Tuple>  neg = new ArrayList<Tuple>() ;
-   List<Tuple>  camino = new ArrayList<Tuple>() ;
+   Stack<Tuple>  cam= new Stack<Tuple>() ;
    int tamaño = 0;
  }
  /*private void desmarcarNegros(){
-
+/* public void insListas()
  }*/
- public  void insTablero (int tamaño, List<Tuple> blan, List<Tuple> neg){
+ public  void insTablero (int tam){
    int inBlancas = 0;
    int inNegras = 0;
+   tamaño = tam;
    for (int i=0; i<tamaño; i++ ) {
       for (int j=0; j<tamaño; j++ ){
         Tuple auxDos = new Tuple(i, j);
         GrafNodo aux = new GrafNodo(auxDos);
-        if (blan.get(inBlancas).getPos().getPosX()==i && blan.get(inBlancas).getPos().getPosY()==j  && inBlancas<blan.size()){
+        if ((blan.get(inBlancas).getPosX()==i) && (blan.get(inBlancas).getPosY()==j) &&  (inBlancas<blan.size())){
             aux.setBool(true);
             aux.setColor(0);//cero->blancas
             inBlancas++;
-        }else if (neg.get(inNegras).getPos().getPosX()==i && neg.get(inNegras).getPos().getPosY()==j  && inNegras<neg.size()){
+            blan.add(auxDos);
+        }else if ((neg.get(inNegras).getPosX()==i) && (neg.get(inNegras).getPosY()==j)  &&  (inNegras<neg.size())){
               aux.setBool(true);
               aux.setColor(1);//Uno->Negras
               inNegras++;
+              neg.add(auxDos);
         }
         dam.insFicha(aux);//nico cambie el insFicha y ahora directamente dado el nodo lo mete como una lista nuieva al grafo, te toca sumarle a la lista de cada nodo su adya..
       }
     }
  }
  private Tuple adyNegro(Tuple b){
-   int pos = (b.getX()*tamaño +b.getY());
-   for (int i=1; i<graf.get(pos).size(); i++){
-     if (dam.get(pos).get(i).getColor() == 1){
-       if (dam.get(pos).get(i).getBool() == true){
-         return dam.get(pos).get(i).getPos();
+   int pos = (b.getPosX()*tamaño +b.getPosY());
+   for (int i=1; i<dam.getLista(pos).size(); i++){
+     if (dam.getLista(pos).get(i).getColor() == 1){
+       if (dam.getLista(pos).get(i).getBool() == true){
+         return dam.getLista(pos).get(i).getPos();
        }
      }
    }
@@ -54,101 +58,102 @@ public class Dama implements interfaceDamas{
    if (n == null){
      return false;
    }
-   if ((b.getX()-n.getX() == 1) && (b.getY() - n.getY() == 1)){
+   if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == 1)){
      int x = b.getPosX()-2;
      int y = b.getPosY()-2;
-     if (((x*tamaño + y)<dam.size()) && (dam.get(x*tamaño+y).get(0).getBool() == false)){
+     if (((x*tamaño + y)<dam.size()) && (dam.getLista(x*tamaño+y).get(0).getBool() == false)){
        return true;
      }
    }
-   if ((b.getX()-n.getX() == 1) && (b.getY() - n.getY() == -1)){
+   if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == -1)){
      int x = b.getPosX()-2;
      int y = b.getPosY()+2;
-     if (((x*tamaño + y)<dam.size()) && (dam.get(x*tamaño+y).get(0).getBool() == false)){
+     if (((x*tamaño + y)<dam.size()) && (dam.getLista(x*tamaño+y).get(0).getBool() == false)){
        return true;
      }
    }
-   if ((b.getX()-n.getX() == -1) && (b.getY() - n.getY() == 1)){
+   if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == 1)){
      int x = b.getPosX()+2;
      int y = b.getPosY()-2;
-     if (((x*tamaño + y)<dam.size()) && (dam.get(x*tamaño+y).get(0).getBool() == false)){
+     if (((x*tamaño + y)<dam.size()) && (dam.getLista(x*tamaño+y).get(0).getBool() == false)){
        return true;
      }
    }
-   if ((b.getX()-n.getX() == -1) && (b.getY() - n.getY() == -1)){
+   if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == -1)){
      int x = b.getPosX()+2;
      int y = b.getPosY()+2;
-     if (((x*tamaño + y)<dam.size()) && (dam.get(x*tamaño+y).get(0).getBool() == false)){
+     if (((x*tamaño + y)<dam.size()) && (dam.getLista(x*tamaño+y).get(0).getBool() == false)){
        return true;
      }
    }
  }
- /*private Tuple salto(Tuple b, Tuple n){
+private Tuple salto(Tuple b, Tuple n){
  if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == 1)){
-   int x = b.getX()-2;
-   int y = b.getY()-2;
+   int x = b.getPosX()-2;
+   int y = b.getPosY()-2;
    Tuple aux = new Tuple(x, y);
    return aux;
    }
- }
- if ((b.getX()-n.getX() == 1) && (b.getY() - n.getY() == -1)){
-   int x = b.getX()-2;
-   int y = b.getY()+2;
+ if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == -1)){
+   int x = b.getPosX()-2;
+   int y = b.getPosY()+2;
    Tuple aux = new Tuple(x, y);
    return aux;
  }
- if ((b.getX()-n.getX() == -1) && (b.getY() - n.getY() == 1)){
-   int x = b.getX()+2;
-   int y = b.getY()-2;
-   if (((
+ if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == 1)){
+   int x = b.getPosX()+2;
+   int y = b.getPosY()-2;
+   Tuple aux = new Tuple(x, y);
+   return aux;
  }
- if ((b.getX()-n.getX() == -1) && (b.getY() - n.getY() == -1)){
-   int x = b.getX()+2;
-   int y = b.getY()+2;
-   if (((x*tamaño + y)<dam.size()) && (dam.get(x*tamaño+y).get(0).getBool() == false)){
-     return true;
-   }
- }*/
+ if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == -1)){
+   int x = b.getPosX()+2;
+   int y = b.getPosY()+2;
+   Tuple aux = new Tuple(x, y);
+   return aux;
+ }
+}
  public boolean camino (Tuple inicio){
    Tuple ady = adyNegro(inicio);
    if (posibleSalto(inicio, ady)){
-     Tuple aux = new Tuple();
-     aux = inicio;
-     int pos = (inicio.getX()*tamaño + inicio.getY());
-     dam.get(pos).get(0).setBool(false);
-     camino.add(aux);
-     int pos = (ady.getX()*tamaño + ady.getY());
-     dam.get(pos).get(0).setBool(false);
+     Tuple aux = new Tuple(inicio.getPosX(), inicio.getPosY());
+     int pos = (inicio.getPosX()*tamaño + inicio.getPosY());
+     dam.getLista(pos).get(0).setBool(false);
+     cam.add(aux);
+     pos = (ady.getPosX()*tamaño + ady.getPosY());
+     dam.getLista(pos).get(0).setBool(false);
      aux = salto(aux, ady);
-     camino.add(aux);
+     cam.add(aux);
    }
    else{
      return false;
    }
-   while (camino.size()<=neg.size()){
+   while (cam.size()<=neg.size()){
+     Tuple aux = new Tuple(0, 0); //La posicion del aux no importa, pues no la va a usar
      ady = adyNegro(aux);
      if (posibleSalto(inicio, ady)){
-       pos = (ady.getX()*tamaño + ady.getY());
-       dam.get(pos).get(0).setBool(false);
+       pos = (ady.getPosX()*tamaño + ady.getPosY());
+       dam.getLista(pos).get(0).setBool(false);
        aux = salto(aux, ady);
-       camino.add(aux);
+       cam.add(aux);
      }
      else{
-       int pos = (inicio.getX()*tamaño + inicio.getY());
-       dam.get(pos).get(0).setBool(false);
-       camino.clear();
-       desmarcarNegros();
+       int pos = (inicio.getPosX()*tamaño + inicio.getPosY());
+       dam.getLista(pos).get(0).setBool(false);
+       cam.clear();
+       //desmarcarNegros();
        return false;
      }
    }
    return true;
  }
  public void mostrar(){
-   if(!camino.isEmpy()){
-     Tuple aux = camino.top();
-     camino.pop();
+   if(!cam.isEmpty()){
+     Tuple aux = cam.peek();
+     cam.pop();
      mostrar();
      System.out.println(aux.mosTuple());
    }
  }
+
 }
