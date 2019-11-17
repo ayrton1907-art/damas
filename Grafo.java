@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Grafo {
 
   private List<List<GrafNodo>> graf;
+  private int tamaño;
 
   public Grafo (){
     List<List<GrafNodo>> graf = new ArrayList<List<GrafNodo>>();
@@ -12,14 +13,14 @@ public class Grafo {
     List<GrafNodo> auxlist = new ArrayList<GrafNodo>();
     auxlist.add(aux);
     graf.add(auxlist);
+    tamaño++;
   }
 
-  public int size(){
-    return graf.size();
+  public GrafNodo getLista (int aux, int aux2){
+    return graf.get(aux).get(aux2);
   }
-
-  public List<GrafNodo> getLista (int aux){
-    return graf.get(pos);
+  public int tam (){
+    return tamaño;
   }
   public void hacerAdy (int tamaño){
     for (int i=0; i<graf.size(); i++){

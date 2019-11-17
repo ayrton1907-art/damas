@@ -17,9 +17,26 @@ public class Dama{
    Stack<Tuple>  cam= new Stack<Tuple>() ;
    int tamaño = 0;
  }
- /*private void desmarcarNegros(){
-/* public void insListas()
- }*/
+ private void desmarcarNegros(){
+   int i = 0;
+   while (i<neg.size()){
+     Tuple porVer = neg.get(i);
+     int aux = (porVer.getPosX()*tamaño + porVer.getPosY());
+     if (dam.getLista(aux, 0).getBool() == true){
+       dam.getLista(aux, 0).setBool(false);
+     }
+   }
+ }
+public void insListas(List<Tuple> blancas, List<Tuple> negras){
+  int i = 0;
+  while (i<blancas.size()){
+    blan.add(blancas.get(i));
+  }
+  i = 0;
+  while (i<negras.size()){
+    neg.add(negras.get(i));
+  }
+}
  public  void insTablero (int tam){
    int inBlancas = 0;
    int inNegras = 0;
@@ -45,83 +62,80 @@ public class Dama{
  }
  private Tuple adyNegro(Tuple b){
    int pos = (b.getPosX()*tamaño +b.getPosY());
-   for (int i=1; i<dam.getLista(pos).size(); i++){
-     if (dam.getLista(pos).get(i).getColor() == 1){
-       if (dam.getLista(pos).get(i).getBool() == true){
-         return dam.getLista(pos).get(i).getPos();
+   for (int i=1; i<5; i++){
+     if (dam.getLista(pos, i).getColor() == 1){
+       if (dam.getLista(pos, i).getBool() == true){
+         return dam.getLista(pos, i).getPos();
        }
      }
    }
    return null;
  }
  private boolean posibleSalto(Tuple b,Tuple n){
-   if (n == null){
-     return false;
-   }
    if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == 1)){
      int x = b.getPosX()-2;
      int y = b.getPosY()-2;
-     if (((x*tamaño + y)<dam.size()) && (dam.getLista(x*tamaño+y).get(0).getBool() == false)){
+     if (((x*tamaño + y)<dam.tam()) && (dam.getLista(x*tamaño+y,0).getBool() == false)){
        return true;
      }
    }
    if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == -1)){
      int x = b.getPosX()-2;
      int y = b.getPosY()+2;
-     if (((x*tamaño + y)<dam.size()) && (dam.getLista(x*tamaño+y).get(0).getBool() == false)){
+     if (((x*tamaño + y)<dam.tam()) && (dam.getLista(x*tamaño+y,0).getBool() == false)){
        return true;
      }
    }
    if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == 1)){
      int x = b.getPosX()+2;
      int y = b.getPosY()-2;
-     if (((x*tamaño + y)<dam.size()) && (dam.getLista(x*tamaño+y).get(0).getBool() == false)){
+     if (((x*tamaño + y)<dam.tam()) && (dam.getLista(x*tamaño+y,0).getBool() == false)){
        return true;
      }
    }
    if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == -1)){
      int x = b.getPosX()+2;
      int y = b.getPosY()+2;
-     if (((x*tamaño + y)<dam.size()) && (dam.getLista(x*tamaño+y).get(0).getBool() == false)){
+     if (((x*tamaño + y)<dam.tam()) && (dam.getLista(x*tamaño+y,0).getBool() == false)){
        return true;
      }
    }
+   return false;
  }
 private Tuple salto(Tuple b, Tuple n){
+  Tuple aux = new Tuple(0, 0);
  if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == 1)){
    int x = b.getPosX()-2;
    int y = b.getPosY()-2;
-   Tuple aux = new Tuple(x, y);
-   return aux;
+   aux.setPos(x,y);
    }
  if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == -1)){
    int x = b.getPosX()-2;
    int y = b.getPosY()+2;
-   Tuple aux = new Tuple(x, y);
-   return aux;
+   aux.setPos(x,y);
  }
  if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == 1)){
    int x = b.getPosX()+2;
    int y = b.getPosY()-2;
-   Tuple aux = new Tuple(x, y);
-   return aux;
+   aux.setPos(x,y);
  }
  if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == -1)){
    int x = b.getPosX()+2;
    int y = b.getPosY()+2;
-   Tuple aux = new Tuple(x, y);
-   return aux;
+   aux.setPos(x,y);
  }
+ return aux;
 }
+
  public boolean camino (Tuple inicio){
    Tuple ady = adyNegro(inicio);
    if (posibleSalto(inicio, ady)){
      Tuple aux = new Tuple(inicio.getPosX(), inicio.getPosY());
      int pos = (inicio.getPosX()*tamaño + inicio.getPosY());
-     dam.getLista(pos).get(0).setBool(false);
+     dam.getLista(pos,0).setBool(false);
      cam.add(aux);
      pos = (ady.getPosX()*tamaño + ady.getPosY());
-     dam.getLista(pos).get(0).setBool(false);
+     dam.getLista(pos,0).setBool(false);
      aux = salto(aux, ady);
      cam.add(aux);
    }
@@ -132,16 +146,16 @@ private Tuple salto(Tuple b, Tuple n){
      Tuple aux = new Tuple(0, 0); //La posicion del aux no importa, pues no la va a usar
      ady = adyNegro(aux);
      if (posibleSalto(inicio, ady)){
-       pos = (ady.getPosX()*tamaño + ady.getPosY());
-       dam.getLista(pos).get(0).setBool(false);
+       int pos = (ady.getPosX()*tamaño + ady.getPosY());
+       dam.getLista(pos,0).setBool(false);
        aux = salto(aux, ady);
        cam.add(aux);
      }
      else{
        int pos = (inicio.getPosX()*tamaño + inicio.getPosY());
-       dam.getLista(pos).get(0).setBool(false);
+       dam.getLista(pos,0).setBool(false);
        cam.clear();
-       //desmarcarNegros();
+       desmarcarNegros();
        return false;
      }
    }
