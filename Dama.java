@@ -126,7 +126,6 @@ private Tuple salto(Tuple b, Tuple n){
  }
  return aux;
 }
-
  public boolean camino (Tuple inicio){
    Tuple ady = adyNegro(inicio);
    if (posibleSalto(inicio, ady)){

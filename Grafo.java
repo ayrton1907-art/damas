@@ -15,7 +15,6 @@ public class Grafo {
     graf.add(auxlist);
     tamaño++;
   }
-
   public GrafNodo getLista (int aux, int aux2){
     return graf.get(aux).get(aux2);
   }
