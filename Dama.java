@@ -17,24 +17,19 @@ public class Dama{
    Stack<Tuple>  cam= new Stack<Tuple>() ;
    int tamaño = 0;
  }
- private void desmarcarNegros(){
-   int i = 0;
-   while (i<neg.size()){
-     Tuple porVer = neg.get(i);
-     int aux = (porVer.getPosX()*tamaño + porVer.getPosY());
-     if (dam.getLista(aux, 0).getBool() == true){
-       dam.getLista(aux, 0).setBool(false);
-     }
-   }
- }
+
+ //Pre-cond: La lista está ordenada.
+ //Post:Listas de Pocisiones llenas.
 public void insListas(List<Tuple> blancas, List<Tuple> negras){
   int i = 0;
   while (i<blancas.size()){
     blan.add(blancas.get(i));
+    i++;
   }
   i = 0;
   while (i<negras.size()){
     neg.add(negras.get(i));
+    i++;
   }
 }
  public  void insTablero (int tam){
@@ -102,6 +97,18 @@ public void insListas(List<Tuple> blancas, List<Tuple> negras){
    }
    return false;
  }
+ //pre:True.
+ //post:Retorna las fichas negras a su pocision original.
+ private void desmarcarNegros(){
+   int i = 0;
+   while (i<neg.size()){
+     Tuple porVer = neg.get(i);
+     int aux = (porVer.getPosX()*tamaño + porVer.getPosY());
+     if (dam.getLista(aux, 0).getBool() == true){
+       dam.getLista(aux, 0).setBool(false);
+     }
+   }
+ }
 private Tuple salto(Tuple b, Tuple n){
   Tuple aux = new Tuple(0, 0);
  if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == 1)){
@@ -168,5 +175,4 @@ private Tuple salto(Tuple b, Tuple n){
      System.out.println(aux.mosTuple());
    }
  }
-
 }
