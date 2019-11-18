@@ -4,35 +4,80 @@ import java.util.ArrayList;
 import java.util.List;
 public class Dama{
 
-  private Grafo dam;
+  private List<List<GrafNodo>> dam;
   private List<Tuple>  blan;
   private List<Tuple>  neg;
   private Stack<Tuple>  cam;
   private int tamaño;
 
  public  Dama (){
-   Grafo dam =new Grafo();
+   List<List<GrafNodo>> aux = new ArrayList<List<GrafNodo>>();
    List<Tuple> blan = new ArrayList<Tuple>() ;    //agregar que inserte los blancos y los negros y el tamaño
    List<Tuple>  neg = new ArrayList<Tuple>() ;
    Stack<Tuple>  cam= new Stack<Tuple>() ;
    int tamaño = 0;
+   dam = aux;
  }
 
+ public void insFicha(GrafNodo aux){
+   System.out.println("sumo");
+   List<GrafNodo> auxlist = new ArrayList<GrafNodo>();
+   if (dam==null){
+     System.out.println("asda");
+   }
+   auxlist.add(aux);
+   dam.add(auxlist);
+ }
+
+ public GrafNodo getLista (int aux, int aux2){
+   return dam.get(aux).get(aux2);
+ }
+ public int tam (){
+   return tamaño;
+ }
+ public void hacerAdy (){
+   for (int i=0; i<dam.size(); i++){
+     int x = dam.get(i).get(0).getPos().getPosX();
+     int y = dam.get(i).get(0).getPos().getPosY();
+     int pos;
+     System.out.print(dam.get(i).get(0).getPos().mosTuple());
+     if (x-1>=0 && y-1>=0){
+       pos=(((x-1)*tamaño)+(y-1));
+       dam.get(i).add(dam.get(pos).get(0));
+       System.out.print(String.valueOf(pos));
+       System.out.print(dam.get(pos).get(dam.get(pos).size()-1).getPos().mosTuple());
+     }
+     if (x-1>=0 && y+1<tamaño){
+       pos=(((x-1)*tamaño)+(y+1));
+       dam.get(i).add(dam.get(pos).get(0));
+       System.out.print(String.valueOf(pos));
+       System.out.print(dam.get(pos).get(dam.get(pos).size()-1).getPos().mosTuple());
+     }
+     if (x+1<tamaño && y-1>=0){
+       pos=(((x+1)*tamaño)+y-1);
+       dam.get(i).add(dam.get(pos).get(0));
+       System.out.print(String.valueOf(pos));
+       System.out.print(dam.get(pos).get(dam.get(pos).size()-1).getPos().mosTuple());
+     }
+     if (x+1<tamaño && y+1<tamaño){
+       pos=(((x+1)*tamaño)+y+1);
+       dam.get(i).add(dam.get(pos).get(0));
+       System.out.print(String.valueOf(pos));
+        System.out.print(dam.get(pos).get(dam.get(pos).size()-1).getPos().mosTuple());
+     }
+     System.out.println(" ");
+   }
+ }
  //Pre-cond: La lista está ordenada.
  //Post:Listas de Pocisiones llenas.
 public void insListas(List<Tuple> blancas, List<Tuple> negras){
-  int i = 0;
-  while (i<blancas.size()){
-    blan.add(blancas.get(i));
-    i++;
-  }
-  i = 0;
-  while (i<negras.size()){
-    neg.add(negras.get(i));
-    i++;
-  }
+  blan = blancas;
+  System.out.println(blan.get(0).mosTuple());
+  neg=negras;
+  System.out.println(neg.get(0).mosTuple());
+  System.out.println(neg.get(1).mosTuple());
 }
- public  void insTablero (int tam){
+public  void insTablero (int tam){
    int inBlancas = 0;
    int inNegras = 0;
    tamaño = tam;
@@ -40,6 +85,7 @@ public void insListas(List<Tuple> blancas, List<Tuple> negras){
       for (int j=0; j<tamaño; j++ ){
         Tuple auxDos = new Tuple(i, j);
         GrafNodo aux = new GrafNodo(auxDos);
+        List<List<GrafNodo>> auxTres = new ArrayList<List<GrafNodo>>();
         if ((blan.get(inBlancas).getPosX()==i) && (blan.get(inBlancas).getPosY()==j) &&  (inBlancas<blan.size())){
             aux.setBool(true);
             aux.setColor(0);//cero->blancas
@@ -51,16 +97,22 @@ public void insListas(List<Tuple> blancas, List<Tuple> negras){
               inNegras++;
               neg.add(auxDos);
         }
-        dam.insFicha(aux);//nico cambie el insFicha y ahora directamente dado el nodo lo mete como una lista nuieva al grafo, te toca sumarle a la lista de cada nodo su adya..
+        List<GrafNodo> auxlist = new ArrayList<GrafNodo>();
+        auxlist.add(aux);
+        dam.add(auxlist);
       }
     }
+    System.out.println("1");
+    hacerAdy();
+    System.out.println("2");
  }
+
  private Tuple adyNegro(Tuple b){
    int pos = (b.getPosX()*tamaño +b.getPosY());
    for (int i=1; i<5; i++){
-     if (dam.getLista(pos, i).getColor() == 1){
-       if (dam.getLista(pos, i).getBool() == true){
-         return dam.getLista(pos, i).getPos();
+     if (getLista(pos,i).getColor() == 1){
+       if (getLista(pos, i).getBool() == true){
+         return getLista(pos, i).getPos();
        }
      }
    }
@@ -70,28 +122,28 @@ public void insListas(List<Tuple> blancas, List<Tuple> negras){
    if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == 1)){
      int x = b.getPosX()-2;
      int y = b.getPosY()-2;
-     if (((x*tamaño + y)<dam.tam()) && (dam.getLista(x*tamaño+y,0).getBool() == false)){
+     if (((x*tamaño + y)<tamaño) && (getLista(x*tamaño+y,0).getBool() == false)){
        return true;
      }
    }
    if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == -1)){
      int x = b.getPosX()-2;
      int y = b.getPosY()+2;
-     if (((x*tamaño + y)<dam.tam()) && (dam.getLista(x*tamaño+y,0).getBool() == false)){
+     if (((x*tamaño + y)<tamaño) && (getLista(x*tamaño+y,0).getBool() == false)){
        return true;
      }
    }
    if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == 1)){
      int x = b.getPosX()+2;
      int y = b.getPosY()-2;
-     if (((x*tamaño + y)<dam.tam()) && (dam.getLista(x*tamaño+y,0).getBool() == false)){
+     if (((x*tamaño + y)<tamaño) && (getLista(x*tamaño+y,0).getBool() == false)){
        return true;
      }
    }
    if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == -1)){
      int x = b.getPosX()+2;
      int y = b.getPosY()+2;
-     if (((x*tamaño + y)<dam.tam()) && (dam.getLista(x*tamaño+y,0).getBool() == false)){
+     if (((x*tamaño + y)<tamaño) && (getLista(x*tamaño+y,0).getBool() == false)){
        return true;
      }
    }
@@ -104,8 +156,8 @@ public void insListas(List<Tuple> blancas, List<Tuple> negras){
    while (i<neg.size()){
      Tuple porVer = neg.get(i);
      int aux = (porVer.getPosX()*tamaño + porVer.getPosY());
-     if (dam.getLista(aux, 0).getBool() == true){
-       dam.getLista(aux, 0).setBool(false);
+     if (getLista(aux, 0).getBool() == true){
+       getLista(aux, 0).setBool(false);
      }
    }
  }
@@ -138,10 +190,10 @@ private Tuple salto(Tuple b, Tuple n){
    if (posibleSalto(inicio, ady)){
      Tuple aux = new Tuple(inicio.getPosX(), inicio.getPosY());
      int pos = (inicio.getPosX()*tamaño + inicio.getPosY());
-     dam.getLista(pos,0).setBool(false);
+     getLista(pos,0).setBool(false);
      cam.add(aux);
      pos = (ady.getPosX()*tamaño + ady.getPosY());
-     dam.getLista(pos,0).setBool(false);
+     getLista(pos,0).setBool(false);
      aux = salto(aux, ady);
      cam.add(aux);
    }
@@ -153,13 +205,13 @@ private Tuple salto(Tuple b, Tuple n){
      ady = adyNegro(aux);
      if (posibleSalto(inicio, ady)){
        int pos = (ady.getPosX()*tamaño + ady.getPosY());
-       dam.getLista(pos,0).setBool(false);
+       getLista(pos,0).setBool(false);
        aux = salto(aux, ady);
        cam.add(aux);
      }
      else{
        int pos = (inicio.getPosX()*tamaño + inicio.getPosY());
-       dam.getLista(pos,0).setBool(false);
+       getLista(pos,0).setBool(false);
        cam.clear();
        desmarcarNegros();
        return false;
