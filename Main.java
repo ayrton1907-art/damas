@@ -16,6 +16,7 @@ public class Main {
                   listNeg.add(auxN2);
                   tablero1.insListas(listBlan,listNeg);
                   tablero1.insTablero(5);
+                  System.out.println(tablero1.camino(auxB));
                   System.out.println ("Empezamos la ejecución del programa");
         //Aquí las instrucciones de inicio y control del programa
 
