@@ -1,3 +1,6 @@
+/*  Juego de damas que indica una posible jugada ganadora en un solo turno.
+    @authors Bortol Juan Pablo, Lopez Ayrton Emilio, Rafti Soto Nicolas Ezequiel
+*/
 package jDamas;
 public class GrafNodo {
 

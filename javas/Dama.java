@@ -1,7 +1,10 @@
+/*  Juego de damas que indica una posible jugada ganadora en un solo turno.
+    @authors Bortol Juan Pablo, Lopez Ayrton Emilio, Rafti Soto Nicolas Ezequiel
+*/
 package jDamas;
 import java.util.ArrayList;
 import java.util.List;
-public class Dama{
+public class Dama implements interfaceDamas{
 
   private List<List<GrafNodo>> dam; //Grafo para encontrar caminos
   private List<Tuple>  blan; //Lista de fichas Blancas con sus posiciones
@@ -19,12 +22,16 @@ public class Dama{
    dam = aux;
    cam = aux2;
  }
- //Pre-cond: La lista está ordenada.
- //Post:Listas de Pocisiones llenas.
+ //@Pre-cond:True
+ //@Post: cambia el valor de las listas del grafo con las dadas por el usuario
+ //@Param: blancas ->Lista de fichas blancas, negras->Lista de fichas Negras
  public void insListas(List<Tuple> blancas, List<Tuple> negras){
    blan = blancas;
    neg  = negras;
  }
+//@Pre-cond: Lista no vacia.
+//@Post: La lista está ordenada.
+//@Param: listOrd->lista, n->longitud de la misma.
  public void mergeSort(List<Tuple> listOrd, int n) {
       if (n <= 1) {
           return;
@@ -42,7 +49,14 @@ public class Dama{
       mergeSort(r, n-mid);
       merge(listOrd, l, r, mid, n- mid);
  }
- public static void merge(List<Tuple> listOrd,List<Tuple> l, List<Tuple>  r, int left, int right){
+
+
+ /* @Pre: 0 <= begin, mid, end <= array.lenght
+ // @Post:: mezcla dos partes consecutivas de array
+ // @Param: listOrd->lista, l->Una de las mitades pasadas,r->La otra mitad pasada,left->indice de una de las Listas.
+    right-> Indice de la otra lista.
+ */
+ public  void merge(List<Tuple> listOrd,List<Tuple> l, List<Tuple>  r, int left, int right){
 	   int i = 0;
      int j = 0;
      int k = 0;
@@ -51,7 +65,7 @@ public class Dama{
 	   while (i < left && j < right) {
           elemL=l.get(i);
           elemR=r.get(j);
-     if ((elemL.comparToX(elemR))<0) {//if (l[i] <= r[j])
+     if ((elemL.comparToX(elemR))<0) {
 					listOrd.set(k,l.get(i));
           i++;
           k++;
@@ -86,6 +100,9 @@ public class Dama{
       k++;
 	 }
 }
+//@Pre-cond: Tanto las listas de fichas blancas como de negras no tienen que estar vacia.
+//@Post-cond:Arma las listas que van a indicar en que posicion del tablero está cada ficha.
+//@Param:tam-> Indica el tamaño del tablero
 public void insTablero (int tam){
    int inBlancas = 0;
    int inNegras = 0;
@@ -115,18 +132,8 @@ public void insTablero (int tam){
     }
     hacerAdy();
  }
- private Tuple adyNegro(Tuple b){
-      int pos = (b.getPosX()*tamaño +b.getPosY());
-      for (int i=1; i<dam.get(pos).size(); i++){
-            if (dam.get(pos).get(i).getColor() == 1){
-                  if (dam.get(pos).get(i).getFicha() == true){
-                      return dam.get(pos).get(i).getPos();
-                  }
-            }
-      }
-      Tuple aux = new Tuple(tamaño, tamaño);
-      return aux;
-  }
+ //@Pre-cond:El tablero tiene que estar insertado.
+ //@Post-cond:Arma las listas de Nodos adyacentes.
   public void hacerAdy (){
     for (int i=0; i<dam.size(); i++){
         int x = dam.get(i).get(0).getPos().getPosX();
@@ -150,76 +157,85 @@ public void insTablero (int tam){
         }
       }
     }
-
-  private boolean posibleSalto(Tuple b,Tuple n){
-          if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == 1)){
-                  int x = b.getPosX()-2;
-                  int y = b.getPosY()-2;
+  //@Pre-cond: la tupla debe existir.
+  //@Post: Indica una posicion.
+  //@Param: fichaBlanca->Tupla de enteros.
+   public Tuple adyNegro(Tuple  fichaBlanca){
+        int pos = (fichaBlanca.getPosX()*tamaño +fichaBlanca.getPosY());
+        for (int i=1; i<dam.get(pos).size(); i++){
+              if (dam.get(pos).get(i).getColor() == 1){
+                    if (dam.get(pos).get(i).getFicha() == true){
+                        return dam.get(pos).get(i).getPos();
+                    }
+              }
+        }
+        Tuple aux = new Tuple(tamaño, tamaño);
+        return aux;
+    }
+    //@Pre-cond: El tablero debe estar insertado.
+    //@Post-cond: Indica si una ficha puede realizar un salto.
+    //@Param:fichaBlanca-> ficha blanca a indicar el salto, fichaNegra->posible posicion de una ficha negra.
+    public boolean posibleSalto(Tuple fichaBlanca,Tuple fichaNegra){
+          if ((fichaBlanca.getPosX()-fichaNegra.getPosX() == 1) && (fichaBlanca.getPosY() - fichaNegra.getPosY() == 1)){
+                  int x = fichaBlanca.getPosX()-2;
+                  int y = fichaBlanca.getPosY()-2;
                   if (((x*tamaño + y)<dam.size()) && (dam.get(x*tamaño+y).get(0).getFicha() == false)){
                           return true;
                   }
           }
-          if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == -1)){
-                  int x = b.getPosX()-2;
-                  int y = b.getPosY()+2;
+          if ((fichaBlanca.getPosX()-fichaNegra.getPosX() == 1) && (fichaBlanca.getPosY() - fichaNegra.getPosY() == -1)){
+                  int x = fichaBlanca.getPosX()-2;
+                  int y = fichaBlanca.getPosY()+2;
                   if (((x*tamaño + y)<dam.size()) && (dam.get(x*tamaño+y).get(0).getFicha() == false)){
                           return true;
                   }
           }
-          if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == 1)){
-                  int x = b.getPosX()+2;
-                  int y = b.getPosY()-2;
+          if ((fichaBlanca.getPosX()-fichaNegra.getPosX() == -1) && (fichaBlanca.getPosY() - fichaNegra.getPosY() == 1)){
+                  int x = fichaBlanca.getPosX()+2;
+                  int y = fichaBlanca.getPosY()-2;
                   if (((x*tamaño + y)<dam.size()) && (dam.get(x*tamaño+y).get(0).getFicha() == false)){
                           return true;
                   }
           }
-          if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == -1)){
-                  int x = b.getPosX()+2;
-                  int y = b.getPosY()+2;
+          if ((fichaBlanca.getPosX()-fichaNegra.getPosX() == -1) && (fichaBlanca.getPosY() - fichaNegra.getPosY() == -1)){
+                  int x = fichaBlanca.getPosX()+2;
+                  int y = fichaBlanca.getPosY()+2;
                   if (((x*tamaño + y)<dam.size()) && (dam.get(x*tamaño+y).get(0).getFicha() == false)){
                           return true;
                   }
           }
           return false;
  }
- //pre:True.
- //post:Retorna las fichas negras a su posicion original.
- private void desmarcarNegros(){
-      int i = 0;
-      while (i<neg.size()){
-            Tuple porVer = neg.get(i);
-            int pos = (porVer.getPosX()*tamaño + porVer.getPosY());
-            if (dam.get(pos).get(0).getFicha() == false){
-                    dam.get(pos).get(0).setFicha(true);
-            }
-            i++;
-      }
- }
-
- private Tuple salto(Tuple b, Tuple n){
+ //@Pre-cond: posibleSalto(fichaBlanca,fichaNegra)=True.
+ //@Post-cond:Cambia de posicion a fichaBlanca por el adyacente a fichaNegra.
+ //@Param:fichaBlanca->Ficha que pretende saltar.  fichaNegra->ficha a saltar.
+ public Tuple salto(Tuple fichaBlanca, Tuple fichaNegra){
       Tuple saltar = new Tuple(0, 0); //el (0,0) no importa
-      if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == 1)){
-                  int x = b.getPosX()-2;
-                  int y = b.getPosY()-2;
+      if ((fichaBlanca.getPosX()-fichaNegra.getPosX() == 1) && (fichaBlanca.getPosY() - fichaNegra.getPosY() == 1)){
+                  int x = fichaBlanca.getPosX()-2;
+                  int y = fichaBlanca.getPosY()-2;
                   saltar.setPos(x,y);
       }
-      if ((b.getPosX()-n.getPosX() == 1) && (b.getPosY() - n.getPosY() == -1)){
-                  int x = b.getPosX()-2;
-                  int y = b.getPosY()+2;
+      if ((fichaBlanca.getPosX()-fichaNegra.getPosX() == 1) && (fichaBlanca.getPosY() - fichaNegra.getPosY() == -1)){
+                  int x = fichaBlanca.getPosX()-2;
+                  int y = fichaBlanca.getPosY()+2;
                   saltar.setPos(x,y);
       }
-      if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == 1)){
-                  int x = b.getPosX()+2;
-                  int y = b.getPosY()-2;
+      if ((fichaBlanca.getPosX()-fichaNegra.getPosX() == -1) && (fichaBlanca.getPosY() - fichaNegra.getPosY() == 1)){
+                  int x = fichaBlanca.getPosX()+2;
+                  int y = fichaBlanca.getPosY()-2;
                   saltar.setPos(x,y);
       }
-      if ((b.getPosX()-n.getPosX() == -1) && (b.getPosY() - n.getPosY() == -1)){
-                  int x = b.getPosX()+2;
-                  int y = b.getPosY()+2;
+      if ((fichaBlanca.getPosX()-fichaNegra.getPosX() == -1) && (fichaBlanca.getPosY() - fichaNegra.getPosY() == -1)){
+                  int x = fichaBlanca.getPosX()+2;
+                  int y = fichaBlanca.getPosY()+2;
                   saltar.setPos(x,y);
       }
       return saltar;
 }
+//@Pre-cond:El tablero debe estar cargado con las listas.
+//@Post-cond:Indica si es posible ganar con una ficha en especifico en un solo turno.
+//@Param: inicio->posicion de la ficha desde la cual se pretende ganar el juego.
 public boolean camino (Tuple inicio){
      Tuple ady = adyNegro(inicio);
      Tuple auxi = new Tuple(tamaño, tamaño);
@@ -264,6 +280,21 @@ public boolean camino (Tuple inicio){
     cam = sendero;
     return true;
 }
+//pre:True.
+//post:Retorna las fichas negras a su posicion original.
+public void desmarcarNegros(){
+     int i = 0;
+     while (i<neg.size()){
+           Tuple porVer = neg.get(i);
+           int pos = (porVer.getPosX()*tamaño + porVer.getPosY());
+           if (dam.get(pos).get(0).getFicha() == false){
+                   dam.get(pos).get(0).setFicha(true);
+           }
+           i++;
+     }
+}
+//@Pre-cond:El tablero debe estar cargado con las listas.
+//@Post-cond:Indica si hay almenos una ficha que gane el juego en un solo turno.
  public boolean caminos(){
   int i = 0;
    while (i < blan.size()){
@@ -274,6 +305,9 @@ public boolean camino (Tuple inicio){
    }
     return false;
   }
+  //@Pre-cond:Las listas a cargar no deben estar vacias.
+  //@Post-cond: Arma el tablero del juego e idica si existe una jugada ganadora.
+  //@Param: ancho-> anchodel tablero, blancas->lista de fichas blancas, negras->lista de fichas negras.
  public  boolean  jugadaGanadora (int ancho, List<Tuple> blancas, List<Tuple> negras){
    insListas(blancas,negras);
     mergeSort(blan,blan.size());
@@ -281,6 +315,8 @@ public boolean camino (Tuple inicio){
    insTablero(ancho);
   return caminos();
 }
+//@Pre-cond: cam no puede estar vacio.
+//@Post-cond:Muestra el camino ganador.
  public void mostrar(){
    for (int i=0; i<cam.size(); i++) {
        System.out.println(cam.get(i).mosTuple());
